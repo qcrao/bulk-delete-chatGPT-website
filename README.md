@@ -1,3 +1,5 @@
+官网地址：https://chatgpt-bulk-delete.qcrao.com/
+
 # bulk-delete-chatGPT-website
 website of ChatGPT bulk delete chrome extension
 
