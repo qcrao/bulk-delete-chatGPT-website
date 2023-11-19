@@ -1,15 +1,17 @@
 <html lang="en">
   
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>ChatGPT Bulk Delete Extension</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet" />
-    <link href="output.css" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>ChatGPT Bulk Delete Extension</title>
+  <!-- 预加载output.css以减少FOUC -->
+  <link rel="preload" href="output.css" as="style">
+  <!-- 引入构建后的Tailwind CSS -->
+  <link rel="stylesheet" href="output.css">
+  <!-- 引入其他样式表，如font-awesome和Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
   
   <body>
     <div class="container mx-auto px-48 py-8">
