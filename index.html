@@ -1,0 +1,278 @@
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ChatGPT Bulk Delete Extension</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #12022B; /* 深紫色背景色 */
+        color: #fff;
+      }
+
+      .gradient-text {
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .gradient-border {
+        border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+
+      .btn {
+        transition: transform 0.3s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .section-padding {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+
+      .video-container {
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%; /* 16:9 宽高比 */
+        background: linear-gradient(90deg, #667eea, #764ba2);
+      }
+
+      .youtube-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .footer-gradient {
+        background: linear-gradient(90deg, #42267B, #2b1d4e);
+      }
+
+      .sticky-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000; /* 确保导航栏在最上层 */
+      }
+
+      .hero-gradient-text {
+        background: linear-gradient(90deg, #A243CB, #C368FF); /* 渐变从 #A243CB 到 #C368FF */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+
+      .sticky-nav nav a {
+        font-size: 20px; /* 或使用 Tailwind 类，如 text-lg */
+      }
+
+      .nav-link-container {
+        display: inline-block; /* 或者使用 flex 项来对齐 */
+        margin-right: 0.5rem; /* 按需调整 */
+        border-radius: 0.375rem; /* 圆角 */
+        transition: background-color 0.3s; /* 平滑背景颜色过渡 */
+        padding: 1rem; /* 增加的内边距 */
+        min-height: 3rem; /* 设定最小高度 */
+      }
+
+      .nav-link-container:hover {
+        background-color: #852CB6; /* 悬停时的背景颜色 */
+      }
+
+      .nav-link {
+        padding: 0.5rem 4rem; /* 内边距 */
+        display: block; /* 使链接填充整个容器 */
+        color: white; /* 链接文字颜色 */
+        text-decoration: none; /* 移除下划线 */
+      }
+
+      /* 整个页面的滚动条样式 */
+      ::-webkit-scrollbar {
+        width: 5px; /* 滚动条的宽度 */
+      }
+
+      /* 滚动条滑轨的样式 */
+      ::-webkit-scrollbar-track {
+        background: #100329; /* 滚动条滑轨的背景色 */
+      }
+
+      /* 滚动条滑块的样式 */
+      ::-webkit-scrollbar-thumb {
+        background: #852CB6; /* 您希望的滚动条颜色 */
+      }
+
+      /* 滚动条滑块悬停效果 */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; /* 滚动条滑块悬停时的颜色 */
+      }
+
+      button {
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      button img {
+        width: 20px;
+        height: 20px;
+      }
+
+    </style>
+  </head>
+  
+  <body>
+    <div class="container mx-auto px-48 py-8">
+      <!-- Rest of the content -->
+      <header class="flex justify-between items-center mb-2 py-2 sticky-nav bg-opacity-90 backdrop-filter backdrop-blur-lg">
+        <a href="#" onclick="scrollToTop(event)">
+          <img src="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png" alt="logo" class="h-12 w-12">
+        </a>
+
+        <nav class="sticky-nav">
+          <div class="nav-link-container">
+            <a id="nav-github" class="nav-item text-sm font-semibold gradient-text mx-2 hover:shadow-lg" href="https://github.com/qcrao/bulk-delete-chatGPT" target="_blank">GitHub</a>
+          </div>
+
+          <div class="nav-link-container">
+            <a class="text-sm gradient-text hover:text-sky-700 font-semibold mx-2" href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg" target="_blank">Chrome web store</a>
+          </div>
+
+          <div class="nav-link-container">
+            <a class="text-sm font-semibold gradient-text mx-2" href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg" target="_blank">Install Now</a>
+          </div>
+
+          <div class="nav-link-container">
+              <a class="text-sm font-semibold gradient-text mx-2" href="#manual-install" onclick="scrollToSection(event, 'manual-install')">Manual Install</a>
+          </div>
+            
+          <div class="nav-link-container">
+              <a class="text-sm font-semibold gradient-text mx-2" href="#contact" onclick="scrollToSection(event, 'contact')">Contact us</a>
+          </div>  
+          <!-- 重复其他链接的容器 -->
+        </nav>
+      </header>
+
+      <script>
+        function scrollToTop(event) {
+          event.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToSection(event, id) {
+          event.preventDefault();
+          const element = document.getElementById(id);
+          const headerOffset = 70; // 调整这个值来设置额外的滚动距离
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+          });
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+          const currentYear = new Date().getFullYear();
+          document.getElementById('copyright').textContent = `© ${currentYear} ChatGPT Bulk Delete. All rights reserved.`;
+        });
+
+        function copyToClipboard(text, btnElement) {
+          navigator.clipboard.writeText(text).then(function() {
+            // 显示提示
+            btnElement.innerHTML = '<i class="fas fa-check" style="color: #2E2057;"></i>'; // 改为检查标记
+            setTimeout(function() {
+              btnElement.innerHTML = '<i class="fas fa-copy" style="color: #100329;"></i>'; // 重置为复制图标
+            }, 2000); // 2秒后重置图标
+          }).catch(function(err) {
+            console.error('Unable to copy text to clipboard', err);
+          });
+        }
+      </script>
+
+      <div class="my-4 section-padding py-5">
+        <div class="video-container">
+          <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="youtube-video" frameborder="0" src="https://www.youtube.com/embed/W2Hq6CQ3qv0?rel=0"></iframe>
+        </div>
+      </div>
+      <section class="text-center my-1 section-padding py-4">
+        <h2 class="text-4xl font-bold gradient-text mb-6">A Powerful Tool for Chat Cleanup at Your Fingertips</h2>
+        <h2 class="text-4xl font-semibold hero-gradient-text mb-6">ChatGPT Bulk Delete</h2>
+        <p class="text-lg mb-8">One-click bulk deletion of conversations stored in ChatGPT. Simple, efficient, and safe.</p>
+        <div class="flex justify-center">
+          <a href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg" class="btn bg-gradient-to-r from-purple-600 to-pink-500 px-8 py-3 mx-2 rounded-lg shadow-lg">Install Now</a>
+          <a href="#manual-install" class="btn border-2 gradient-border px-8 py-3 mx-2 rounded-lg shadow-lg text-purple-600" onclick="scrollToSection(event, 'manual-install')">Manual Install</a>
+        </div>
+      </section>
+      <section class="bg-[#12022B] text-white py-24">
+        <div class="container mx-auto px-4 grid grid-cols-2 gap-4">
+          <!-- User reviews -->
+          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
+            <img alt="All Might" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjVCXPOxl-QDfcxIvNbbfD2kYNOrpc6Z3KbkWk30WbC5df4=s48-w48-h48" width="48" />
+            <p class="text-lg italic">"Save me a lot of pain and time. Great app. That's what I am looking for! No issue with the app." - All Might</p></div>
+          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
+            <img alt="你好旧时光" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjUx1sVrD3nJPYWACUZCTWUT53Wt3a6coxWapwATK1GkiOU=s48-w48-h48" width="48" />
+            <p class="text-lg italic">"好用，每天几十个对话，有些临时的，但有些第二天要用，这样马上就区分开来了" - 你好旧时光</p></div>
+          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
+            <img alt="User profile picture" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a/ACg8ocJdmclx4eN0RFaR-I3cZZ87zKwLd9HM8RwK5aFlz-T2=s48-w48-h48" width="48" />
+            <p class="text-lg italic">"不错，可以用！" - Y G</p></div>
+          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
+            <img alt="User profile picture" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjVcMPXMq7dRu--07YdMInRGvEeGQSVHgmgbEfcqbNZNkQ=s48-w48-h48" width="48" />
+            <p class="text-lg italic">"Worked great for me. Exactly what I needed." - Andrew Matteson</p></div>
+        </div>
+      </section>
+      <!-- Manual Installation Guide -->
+      <div class="max-w-6xl mx-auto px-4 py-16">
+        <!-- Installation Guide -->
+        <div class="bg-gradient-to-r from-purple-700 to-pink-600 p-10 rounded-xl shadow-xl">
+          <h1 id="manual-install" class="text-4xl font-bold mb-8 border-b-4 border-pink-300 pb-4">Manual Installation Instructions</h1>
+          <ol class="list-decimal pl-6 space-y-4 text-lg">
+            <li>
+              Visit our <a href="https://github.com/qcrao/bulk-delete-chatGPT" target="_blank" class="underline" style="color: blue">GitHub repository</a> and <a href="https://github.com/qcrao/bulk-delete-chatGPT/archive/refs/heads/master.zip" target="_blank" class="underline" style="color: blue">download the source code zip file</a>.
+            </li>
+            <li>
+              Open Chrome browser and navigate to <mark>chrome://extensions/</mark>.
+              <button onclick="copyToClipboard('chrome://extensions/', this)">
+                <i class="fas fa-copy" style="color: #100329;"></i>
+              </button>
+            </li>
+            <li>
+              Enable <mark>Developer mode</mark>, then click on <mark>Load unpacked</mark> and select the unzipped folder.
+            </li>
+            <li>
+              The extension is now installed and ready for use.
+            </li>
+          </ol>
+        </div>
+        <!-- Contact Us -->
+        <div id="contact" class="bg-gradient-to-r from-indigo-700 to-purple-800 p-10 rounded-xl shadow-xl mt-10">
+          <h2 class="text-3xl font-semibold mb-6">Contact us</h2>
+          <div>
+            <p class="text-lg inline-block mr-2">qcrao91@gmail.com</p>
+            <button onclick="copyToClipboard('qcrao91@gmail.com', this)">
+              <i class="fas fa-copy" style="color: #100329;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer with copyright -->
+
+      <footer>
+        <div class="footer-gradient py-4">
+          <p id="copyright" class="text-center">&copy; ChatGPT Bulk Delete. All rights reserved.</p>
+        </div>
+      </footer>
+  </body>
+
+</html>
