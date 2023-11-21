@@ -41,6 +41,7 @@
         </nav>
       </header>
 
+      <script async src="//changkun.de/urlstat/client.js"></script>
       <script>
         function scrollToTop(event) {
           event.preventDefault();
@@ -62,8 +63,13 @@
 
         document.addEventListener('DOMContentLoaded', (event) => {
           const currentYear = new Date().getFullYear();
-          document.getElementById('copyright').textContent = `© ${currentYear} ChatGPT Bulk Delete. All rights reserved.`;
+          // 设置版权信息，并保留 PV/UV 统计的占位符
+          document.getElementById('copyright').innerHTML = `
+            &copy; ${currentYear} ChatGPT Bulk Delete. All rights reserved. | 
+            PV/UV: <span id="urlstat-site-pv"></span>/<span id="urlstat-site-uv"></span>
+          `;
         });
+
 
         function copyToClipboard(text, btnElement) {
           navigator.clipboard.writeText(text).then(function() {
@@ -148,7 +154,7 @@
 
       <footer>
         <div class="footer-gradient py-4">
-          <p id="copyright" class="text-center">&copy; ChatGPT Bulk Delete. All rights reserved.</p>
+          <p id="copyright" class="text-center">&copy; ChatGPT Bulk Delete. All rights reserved. | PV/UV: <span id="urlstat-site-pv"></span>/<span id="urlstat-site-uv"></span></p>
         </div>
       </footer>
   </body>
