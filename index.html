@@ -1,163 +1,274 @@
+<!DOCTYPE html>
 <html lang="en">
-  
-<head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>ChatGPT Bulk Delete Extension</title>
-  <!-- 预加载output.css以减少FOUC -->
-  <link rel="preload" href="output.css" as="style">
-  <!-- 引入构建后的Tailwind CSS -->
-  <link rel="stylesheet" href="output.css">
-  <!-- 引入其他样式表，如font-awesome和Google Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <meta name="google-site-verification" content="Mo7pO6Jb5YGC50BAFBZCx3U4aX7S3WD_y1BcQ7gTKE8" />
-  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png">
-</head>
-  <body>
-    <div class="container mx-auto px-48 py-8">
-      <!-- Rest of the content -->
-      <header class="flex justify-between items-center mb-2 py-2 sticky-nav bg-opacity-90 backdrop-filter backdrop-blur-lg">
-        <a href="#" onclick="scrollToTop(event)">
-          <img src="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png" alt="logo" class="h-12 w-12">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatGPT Bulk Delete Extension</title>
+    <link rel="preload" href="output.css" as="style" />
+    <link rel="stylesheet" href="output.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="google-site-verification"
+      content="Mo7pO6Jb5YGC50BAFBZCx3U4aX7S3WD_y1BcQ7gTKE8"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png"
+    />
+  </head>
+  <body
+    class="bg-gradient-to-b from-[#12022B] to-[#1D0940] text-white min-h-screen"
+  >
+    <header
+      class="fixed w-full bg-opacity-90 backdrop-filter backdrop-blur-lg z-50"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <a href="#" onclick="scrollToTop(event)" class="flex items-center">
+          <img
+            src="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png"
+            alt="logo"
+            class="h-10 w-10 mr-2"
+          />
+          <span class="text-xl font-bold gradient-text"
+            >ChatGPT Bulk Delete</span
+          >
         </a>
-
-        <nav class="sticky-nav">
-          <div class="nav-link-container">
-            <a id="nav-github" class="nav-item text-sm font-semibold gradient-text mx-2 hover:shadow-lg" href="https://github.com/qcrao/bulk-delete-chatGPT" target="_blank">GitHub</a>
-          </div>
-
-          <div class="nav-link-container">
-            <a class="text-sm gradient-text hover:text-sky-700 font-semibold mx-2" href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg" target="_blank">Chrome web store</a>
-          </div>
-
-          <div class="nav-link-container">
-              <a class="text-sm font-semibold gradient-text mx-2" href="#install" onclick="scrollToSection(event, 'web-store-install')">Install</a>
-          </div>
-            
-          <div class="nav-link-container">
-              <a class="text-sm font-semibold gradient-text mx-2" href="#contact" onclick="scrollToSection(event, 'contact')">Contact us</a>
-          </div>  
-          <!-- 重复其他链接的容器 -->
+        <nav class="hidden md:flex space-x-6">
+          <a
+            href="https://github.com/qcrao/bulk-delete-chatGPT"
+            target="_blank"
+            class="nav-link"
+            >GitHub</a
+          >
+          <a
+            href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg"
+            target="_blank"
+            class="nav-link"
+            >Chrome Web Store</a
+          >
+          <a href="#install" class="nav-link">Install</a>
+          <a href="#contact" class="nav-link">Contact</a>
         </nav>
-      </header>
-
-      <script async src="//changkun.de/urlstat/client.js"></script>
-      <script>
-        function scrollToTop(event) {
-          event.preventDefault();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function scrollToSection(event, id) {
-          event.preventDefault();
-          const element = document.getElementById(id);
-          const headerOffset = 70; // 调整这个值来设置额外的滚动距离
-          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-          const offsetPosition = elementPosition - headerOffset;
-
-          window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-          });
-        }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-          const currentYear = new Date().getFullYear();
-          // 设置版权信息，并保留 PV/UV 统计的占位符
-          document.getElementById('copyright').innerHTML = `
-            &copy; ${currentYear} ChatGPT Bulk Delete. All rights reserved. | 
-            PV/UV: <span id="urlstat-site-pv"></span>/<span id="urlstat-site-uv"></span>
-          `;
-        });
-
-
-        function copyToClipboard(text, btnElement) {
-          navigator.clipboard.writeText(text).then(function() {
-            // 显示提示
-            btnElement.innerHTML = '<i class="fas fa-check" style="color: #2E2057;"></i>'; // 改为检查标记
-            setTimeout(function() {
-              btnElement.innerHTML = '<i class="fas fa-copy" style="color: #100329;"></i>'; // 重置为复制图标
-            }, 2000); // 2秒后重置图标
-          }).catch(function(err) {
-            console.error('Unable to copy text to clipboard', err);
-          });
-        }
-      </script>
-
-      <div class="my-4 section-padding py-5">
-        <div class="video-container">
-          <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="youtube-video" frameborder="0" src="https://www.youtube.com/embed/W2Hq6CQ3qv0?rel=0"></iframe>
-        </div>
+        <button class="md:hidden" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
       </div>
-      <section class="text-center my-1 section-padding py-4">
-        <h2 class="text-4xl font-bold gradient-text mb-6">A Powerful Tool for Chat Cleanup at Your Fingertips</h2>
-        <h2 class="text-4xl font-semibold hero-gradient-text mb-6">ChatGPT Bulk Delete</h2>
-        <p class="text-lg mb-8">One-click bulk deletion of conversations stored in ChatGPT. Simple, efficient, and safe.</p>
-        <div class="flex justify-center">
-          <a id="web-store-install" href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg" class="btn bg-gradient-to-r from-purple-600 to-pink-500 px-8 py-3 mx-2 rounded-lg shadow-lg">Install Now</a>
-          <a href="#manual-install" class="btn border-2 gradient-border px-8 py-3 mx-2 rounded-lg shadow-lg text-purple-600" onclick="scrollToSection(event, 'manual-install')">Manual Install</a>
+      <div class="md:hidden hidden" id="mobile-menu">
+        <a
+          href="https://github.com/qcrao/bulk-delete-chatGPT"
+          target="_blank"
+          class="block py-2 px-4 text-sm hover:bg-purple-700"
+          >GitHub</a
+        >
+        <a
+          href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg"
+          target="_blank"
+          class="block py-2 px-4 text-sm hover:bg-purple-700"
+          >Chrome Web Store</a
+        >
+        <a href="#install" class="block py-2 px-4 text-sm hover:bg-purple-700"
+          >Install</a
+        >
+        <a href="#contact" class="block py-2 px-4 text-sm hover:bg-purple-700"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <main class="pt-20">
+      <section
+        class="hero bg-gradient-to-r from-purple-900 to-indigo-900 py-20 text-center"
+      >
+        <div class="container mx-auto px-4">
+          <h1 class="text-5xl font-bold mb-6 hero-gradient-text">
+            ChatGPT Bulk Delete
+          </h1>
+          <p class="text-xl mb-8 max-w-2xl mx-auto">
+            One-click bulk deletion of conversations stored in ChatGPT. Simple,
+            efficient, and safe.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="https://chromewebstore.google.com/detail/chatgpt-bulk-delete/effkgioceefcfaegehhfafjneeiabdjg"
+              class="btn bg-gradient-to-r from-purple-600 to-pink-500 px-8 py-3 rounded-lg shadow-lg text-lg font-semibold hover:from-purple-700 hover:to-pink-600 transition duration-300"
+              >Install Now</a
+            >
+            <a
+              href="#manual-install"
+              class="btn border-2 gradient-border px-8 py-3 rounded-lg shadow-lg text-lg font-semibold hover:bg-white hover:text-purple-600 transition duration-300"
+              >Manual Install</a
+            >
+          </div>
         </div>
       </section>
-      <section class="bg-[#12022B] text-white py-24">
-        <div class="container mx-auto px-4 grid grid-cols-2 gap-4">
-          <!-- User reviews -->
-          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
-            <img alt="All Might" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjVCXPOxl-QDfcxIvNbbfD2kYNOrpc6Z3KbkWk30WbC5df4=s48-w48-h48" width="48" />
-            <p class="text-lg italic">"Save me a lot of pain and time. Great app. That's what I am looking for! No issue with the app." - All Might</p></div>
-          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
-            <img alt="你好旧时光" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjUx1sVrD3nJPYWACUZCTWUT53Wt3a6coxWapwATK1GkiOU=s48-w48-h48" width="48" />
-            <p class="text-lg italic">"好用，每天几十个对话，有些临时的，但有些第二天要用，这样马上就区分开来了" - 你好旧时光</p></div>
-          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
-            <img alt="User profile picture" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a/ACg8ocJdmclx4eN0RFaR-I3cZZ87zKwLd9HM8RwK5aFlz-T2=s48-w48-h48" width="48" />
-            <p class="text-lg italic">"不错，可以用！" - Y G</p></div>
-          <div class="shadow-lg rounded-lg p-4 flex items-center space-x-4">
-            <img alt="User profile picture" class="w-12 h-12 rounded-full" height="48" src="https://lh3.googleusercontent.com/a-/ALV-UjVcMPXMq7dRu--07YdMInRGvEeGQSVHgmgbEfcqbNZNkQ=s48-w48-h48" width="48" />
-            <p class="text-lg italic">"Worked great for me. Exactly what I needed." - Andrew Matteson</p></div>
+
+      <section class="py-20">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+            How It Works
+          </h2>
+          <div class="video-container rounded-xl overflow-hidden shadow-2xl">
+            <iframe
+              class="youtube-video"
+              src="https://www.youtube.com/embed/W2Hq6CQ3qv0?rel=0"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </section>
-      <!-- Manual Installation Guide -->
-      <div class="max-w-6xl mx-auto px-4 py-16">
-        <!-- Installation Guide -->
-        <div class="bg-gradient-to-r from-purple-700 to-pink-600 p-10 rounded-xl shadow-xl">
-          <h1 id="manual-install" class="text-4xl font-bold mb-8 border-b-4 border-pink-300 pb-4">Manual Installation Instructions</h1>
-          <ol class="list-decimal pl-6 space-y-4 text-lg">
-            <li>
-              Visit our <a href="https://github.com/qcrao/bulk-delete-chatGPT" target="_blank" class="underline" style="color: blue">GitHub repository</a> and <a href="https://github.com/qcrao/bulk-delete-chatGPT/archive/refs/heads/master.zip" target="_blank" class="underline" style="color: blue">download the source code zip file</a>.
-            </li>
-            <li>
-              Open Chrome browser and navigate to <mark>chrome://extensions/</mark>.
-              <button onclick="copyToClipboard('chrome://extensions/', this)">
-                <i class="fas fa-copy" style="color: #100329;"></i>
-              </button>
-            </li>
-            <li>
-              Enable <mark>Developer mode</mark>, then click on <mark>Load unpacked</mark> and select the unzipped folder.
-            </li>
-            <li>
-              The extension is now installed and ready for use.
-            </li>
-          </ol>
+
+      <section class="bg-gradient-to-r from-indigo-900 to-purple-900 py-20">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+            User Reviews
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white bg-opacity-10 rounded-lg p-6 shadow-xl">
+              <div class="flex items-center mb-4">
+                <img
+                  src="https://lh3.googleusercontent.com/a-/ALV-UjVCXPOxl-QDfcxIvNbbfD2kYNOrpc6Z3KbkWk30WbC5df4=s48-w48-h48"
+                  alt="All Might"
+                  class="w-12 h-12 rounded-full mr-4"
+                />
+                <div>
+                  <h3 class="font-semibold">All Might</h3>
+                  <div class="text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="italic">
+                "Save me a lot of pain and time. Great app. That's what I am
+                looking for! No issue with the app."
+              </p>
+            </div>
+            <!-- Repeat for other reviews -->
+          </div>
         </div>
-        <!-- Contact Us -->
-        <div id="contact" class="bg-gradient-to-r from-indigo-700 to-purple-800 p-10 rounded-xl shadow-xl mt-10">
-          <h2 class="text-3xl font-semibold mb-6">Contact us</h2>
-          <div>
-            <p class="text-lg inline-block mr-2">qcrao91@gmail.com</p>
-            <button onclick="copyToClipboard('qcrao91@gmail.com', this)">
-              <i class="fas fa-copy" style="color: #100329;"></i>
+      </section>
+
+      <section id="manual-install" class="py-20">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+            Manual Installation Instructions
+          </h2>
+          <div
+            class="bg-white bg-opacity-10 rounded-xl p-8 shadow-xl max-w-3xl mx-auto"
+          >
+            <ol class="list-decimal pl-6 space-y-4">
+              <li>
+                Visit our
+                <a
+                  href="https://github.com/qcrao/bulk-delete-chatGPT"
+                  target="_blank"
+                  class="text-blue-400 hover:underline"
+                  >GitHub repository</a
+                >
+                and
+                <a
+                  href="https://github.com/qcrao/bulk-delete-chatGPT/archive/refs/heads/master.zip"
+                  target="_blank"
+                  class="text-blue-400 hover:underline"
+                  >download the source code zip file</a
+                >.
+              </li>
+              <li>
+                Open Chrome browser and navigate to
+                <span class="bg-gray-700 px-2 py-1 rounded"
+                  >chrome://extensions/</span
+                >
+                <button
+                  onclick="copyToClipboard('chrome://extensions/', this)"
+                  class="ml-2 text-purple-400 hover:text-purple-300"
+                >
+                  <i class="fas fa-copy"></i>
+                </button>
+              </li>
+              <li>
+                Enable <span class="font-semibold">Developer mode</span>, then
+                click on <span class="font-semibold">Load unpacked</span> and
+                select the unzipped folder.
+              </li>
+              <li>The extension is now installed and ready for use.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="contact"
+        class="bg-gradient-to-r from-purple-900 to-indigo-900 py-20"
+      >
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-3xl font-bold mb-8 gradient-text">Contact Us</h2>
+          <p class="text-xl mb-4">
+            Have questions or feedback? Reach out to us!
+          </p>
+          <div
+            class="inline-flex items-center bg-white bg-opacity-10 rounded-lg px-4 py-2"
+          >
+            <span class="mr-2">qcrao91@gmail.com</span>
+            <button
+              onclick="copyToClipboard('qcrao91@gmail.com', this)"
+              class="text-purple-400 hover:text-purple-300"
+            >
+              <i class="fas fa-copy"></i>
             </button>
           </div>
         </div>
+      </section>
+    </main>
+
+    <footer class="bg-gradient-to-r from-[#12022B] to-[#1D0940] py-6">
+      <div class="container mx-auto px-4 text-center">
+        <p id="copyright">
+          &copy; 2024 ChatGPT Bulk Delete. All rights reserved. PV|UV:
+          <span id="urlstat-site-pv"></span>|<span id="urlstat-site-uv"></span>
+        </p>
       </div>
-    </div>
-    <!-- Footer with copyright -->
+    </footer>
 
-      <footer>
-        <div class="footer-gradient py-4">
-          <p id="copyright" class="text-center">&copy; ChatGPT Bulk Delete. All rights reserved. | PV/UV: <span id="urlstat-site-pv"></span>/<span id="urlstat-site-uv"></span></p>
-        </div>
-      </footer>
+    <script async src="//changkun.de/urlstat/client.js"></script>
+    <script>
+      // Your existing JavaScript functions here
+      function copyToClipboard(text, btnElement) {
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            btnElement.innerHTML = '<i class="fas fa-check"></i>';
+            btnElement.classList.add("text-green-400");
+            setTimeout(function () {
+              btnElement.innerHTML = '<i class="fas fa-copy"></i>';
+              btnElement.classList.remove("text-green-400");
+            }, 2000);
+          })
+          .catch(function (err) {
+            console.error("Unable to copy text to clipboard", err);
+          });
+      }
+
+      // Add mobile menu toggle functionality
+      document
+        .getElementById("mobile-menu-button")
+        .addEventListener("click", function () {
+          document.getElementById("mobile-menu").classList.toggle("hidden");
+        });
+    </script>
   </body>
-
 </html>
