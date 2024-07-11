@@ -19,6 +19,16 @@
       rel="icon"
       type="image/png"
       href="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png" />
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.5.0/umd/Recharts.js"></script>
   </head>
   <body
     class="bg-gradient-to-b from-[#12022B] to-[#1D0940] text-white min-h-screen">
@@ -216,6 +226,15 @@
           </div>
         </div>
       </section>
+
+      <section class="py-20">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+            Usage Statistics
+          </h2>
+          <div id="usage-stats-dashboard"></div>
+        </div>
+      </section>
     </main>
 
     <footer class="bg-gradient-to-r from-[#12022B] to-[#1D0940] py-6">
@@ -252,6 +271,110 @@
         .addEventListener("click", function () {
           document.getElementById("mobile-menu").classList.toggle("hidden");
         });
+    </script>
+
+    <script type="text/babel">
+      // Ensure Recharts is loaded before using it
+      if (typeof Recharts === "undefined") {
+        console.error("Recharts is not loaded. Please check the script tag.");
+      } else {
+        const {
+          BarChart,
+          Bar,
+          XAxis,
+          YAxis,
+          CartesianGrid,
+          Tooltip,
+          Legend,
+          ResponsiveContainer,
+        } = Recharts;
+
+        const UsageStatsDashboard = () => {
+          const [data, setData] = React.useState([]);
+          const [loading, setLoading] = React.useState(true);
+          const [error, setError] = React.useState(null);
+
+          React.useEffect(() => {
+            const fetchData = async () => {
+              try {
+                const response = await fetch(
+                  "https://bulk-delete-chatgpt-worker.qcrao.com/get-events-summary?start_date=2024-06-20&end_date=2024-09-25"
+                );
+                const result = await response.json();
+                if (result.success) {
+                  setData(result.data);
+                } else {
+                  throw new Error("Failed to fetch data");
+                }
+              } catch (err) {
+                setError("Error fetching data. Please try again later.");
+              } finally {
+                setLoading(false);
+              }
+            };
+
+            fetchData();
+          }, []);
+
+          const formatData = (data) => {
+            return data.map((item) => ({
+              ...item,
+              dateTime: `${item.date} ${item.hour}:00`,
+            }));
+          };
+
+          if (loading) return <div>Loading...</div>;
+          if (error) return <div>{error}</div>;
+
+          return (
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">
+                  Hourly Deletion Count
+                </h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={formatData(data)}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="dateTime" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      dataKey="total_count"
+                      fill="#8884d8"
+                      name="Deletions"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-4">
+                  Unique Users per Hour
+                </h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={formatData(data)}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="dateTime" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      dataKey="unique_users"
+                      fill="#82ca9d"
+                      name="Unique Users"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          );
+        };
+
+        ReactDOM.render(
+          <UsageStatsDashboard />,
+          document.getElementById("usage-stats-dashboard")
+        );
+      }
     </script>
   </body>
 </html>
