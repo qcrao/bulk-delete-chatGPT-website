@@ -478,10 +478,25 @@
           );
         };
 
-        ReactDOM.render(
-          <UsageStatsDashboard />,
-          document.getElementById("usage-stats-dashboard")
-        );
+        // 在脚本末尾添加这个函数
+        function renderDashboard() {
+          console.log("Attempting to render React component");
+          try {
+            ReactDOM.render(
+              <UsageStatsDashboard />,
+              document.getElementById("usage-stats-dashboard")
+            );
+            console.log("React component rendered successfully");
+          } catch (error) {
+            console.error("Error rendering React component:", error);
+            document.getElementById(
+              "usage-stats-dashboard"
+            ).innerHTML = `<div style="color: red;">Error rendering dashboard: ${error.message}</div>`;
+          }
+        }
+
+        // 立即调用渲染函数
+        renderDashboard();
       }
     </script>
   </body>
