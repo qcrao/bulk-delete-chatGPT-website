@@ -45,7 +45,11 @@
       <div
         class="container mx-auto px-4 py-4 flex justify-between items-center"
       >
-        <a href="#" onclick="scrollToTop(event)" class="flex items-center">
+        <a
+          href="#"
+          onclick="scrollToTop(event); return false;"
+          class="flex items-center"
+        >
           <img
             src="https://raw.githubusercontent.com/qcrao/bulk-delete-chatGPT/28d0f7b1620bccb046df77a179e0047cbe9cb86b/icon48.png"
             alt="logo"
@@ -68,8 +72,19 @@
             class="nav-link"
             >Chrome Web Store</a
           >
-          <a href="#install" class="nav-link">Install</a>
-          <a href="#contact" class="nav-link">Contact</a>
+
+          <a
+            href="#contact"
+            onclick="scrollToSection('contact'); return false;"
+            class="nav-link"
+            >Contact</a
+          >
+          <a
+            href="#usage-stats-dashboard"
+            onclick="scrollToSection('usage-stats-dashboard'); return false;"
+            class="nav-link"
+            >Usage Statistics</a
+          >
         </nav>
         <button class="md:hidden" id="mobile-menu-button">
           <i class="fas fa-bars text-2xl"></i>
@@ -88,11 +103,15 @@
           class="block py-2 px-4 text-sm hover:bg-purple-700"
           >Chrome Web Store</a
         >
-        <a href="#install" class="block py-2 px-4 text-sm hover:bg-purple-700"
-          >Install</a
-        >
+
         <a href="#contact" class="block py-2 px-4 text-sm hover:bg-purple-700"
           >Contact</a
+        >
+
+        <a
+          href="#usage-stats-dashboard"
+          class="block py-2 px-4 text-sm hover:bg-purple-700"
+          >Usage Statistics</a
         >
       </div>
     </header>
@@ -245,6 +264,21 @@
         </p>
       </div>
     </footer>
+
+    <script>
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function scrollToTop(event) {
+        event.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    </script>
 
     <script async src="//changkun.de/urlstat/client.js"></script>
 
