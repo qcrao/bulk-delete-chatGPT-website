@@ -7,3 +7,7 @@ website of ChatGPT bulk delete chrome extension
 # Build
 
 npm install; npx tailwindcss build main.css -o output.css
+
+# Auto Build
+
+npx tailwindcss -i ./main.css -o ./output.css --watch
