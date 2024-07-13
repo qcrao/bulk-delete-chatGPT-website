@@ -1174,21 +1174,6 @@ video {
           appearance: auto;
 }
 
-.columns-2 {
-  -moz-columns: 2;
-       columns: 2;
-}
-
-.columns-3 {
-  -moz-columns: 3;
-       columns: 3;
-}
-
-.columns-4 {
-  -moz-columns: 4;
-       columns: 4;
-}
-
 .break-before-auto {
   -moz-column-break-before: auto;
        break-before: auto;
