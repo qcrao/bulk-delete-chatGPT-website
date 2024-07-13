@@ -58,36 +58,51 @@ const reviews = [
     comment: "Saved me so much time. Great extension",
     stars: 5,
   },
+  {
+    name: "PDF",
+    avatar:
+      "https://lh3.googleusercontent.com/a-/ALV-UjVkiIjn-5QpyCXuY2-Ppx0fiiNhLvX5d_ugP9wld_-foMl8PwwI=s96-w96-h96",
+    comment: "Thank you! This was a badly needed feature for chatgpt",
+    stars: 5,
+  },
 ];
 
 function createStars(count) {
   return Array(5)
     .fill()
-    .map(
-      (_, i) =>
-        `<i class="fas fa-star ${
+    .map((_, i) => (
+      <i
+        key={i}
+        className={`fas fa-star ${
           i < count ? "text-yellow-400" : "text-gray-400"
-        }"></i>`
-    )
-    .join("");
+        }`}></i>
+    ));
 }
 
-function createReviewElement(review) {
-  return `
-<div class="review-card">
-  <div class="flex items-center mb-4">
-    <img src="${review.avatar}" alt="${review.name}" class="review-avatar" />
-    <div>
-      <h3 class="review-name">${review.name}</h3>
-      <div class="review-stars">
-        ${createStars(review.stars)}
+function ReviewCard({ review }) {
+  return (
+    <div className="review-card">
+      <div className="flex items-center mb-4">
+        <img src={review.avatar} alt={review.name} className="review-avatar" />
+        <div>
+          <h3 className="review-name">{review.name}</h3>
+          <div className="review-stars">{createStars(review.stars)}</div>
+        </div>
       </div>
+      <p className="review-comment">"{review.comment}"</p>
     </div>
-  </div>
-  <p class="review-comment">"${review.comment}"</p>
-</div>
-`;
+  );
 }
 
-const reviewsContainer = document.getElementById("user-reviews");
-reviewsContainer.innerHTML = reviews.map(createReviewElement).join("");
+function Reviews() {
+  return (
+    <div className="review-container">
+      {reviews.map((review, index) => (
+        <ReviewCard key={index} review={review} />
+      ))}
+    </div>
+  );
+}
+
+// Render the component
+ReactDOM.render(<Reviews />, document.getElementById("user-reviews"));
