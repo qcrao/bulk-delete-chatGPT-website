@@ -1,5 +1,5 @@
- // Ensure Recharts is loaded before using it
- if (typeof Recharts === "undefined") {
+// Ensure Recharts is loaded before using it
+if (typeof Recharts === "undefined") {
   console.error("Recharts is not loaded. Please check the script tag.");
 } else {
   const {
@@ -34,8 +34,7 @@
       const newEndDate = e.target.value;
       if (
         new Date(newEndDate) >= new Date(startDate) &&
-        (new Date(newEndDate) - new Date(startDate)) /
-          (1000 * 60 * 60 * 24) <=
+        (new Date(newEndDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) <=
           7
       ) {
         onEndDateChange(newEndDate);
@@ -126,20 +125,38 @@
     }, [startDate, endDate]);
 
     const formatData = (data) => {
-      return data.map((item) => ({
-        ...item,
-        dateTime: `${item.date} ${item.hour}:00`,
-      }));
+      const formattedData = {};
+      data.forEach((item) => {
+        const key = `${item.date} ${item.hour}:00`;
+        if (!formattedData[key]) {
+          formattedData[key] = {
+            dateTime: key,
+            delete: 0,
+            archive: 0,
+            page_views: 0,
+            unique_users: 0,
+            total_count: 0,
+          };
+        }
+        if (item.action === "delete") {
+          formattedData[key].delete = item.total_count;
+        } else if (item.action === "archive") {
+          formattedData[key].archive = item.total_count;
+        }
+        formattedData[key].unique_users = Math.max(
+          formattedData[key].unique_users,
+          item.unique_users
+        );
+        formattedData[key].total_count += item.total_count;
+        formattedData[key].page_views += item.page_views;
+      });
+      return Object.values(formattedData);
     };
 
     if (loading)
-      return (
-        <div className="text-center text-white text-2xl">Loading...</div>
-      );
+      return <div className="text-center text-white text-2xl">Loading...</div>;
     if (error)
-      return (
-        <div className="text-center text-red-500 text-2xl">{error}</div>
-      );
+      return <div className="text-center text-red-500 text-2xl">{error}</div>;
 
     const formattedData = formatData(data);
 
@@ -153,7 +170,7 @@
         />
         <div>
           <h3 className="text-3xl font-semibold mb-8 text-white text-center">
-            Hourly Deletion Count
+            Hourly Action Count
           </h3>
           <ResponsiveContainer width="100%" height={500}>
             <BarChart data={formattedData}>
@@ -162,11 +179,22 @@
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar
-                dataKey="total_count"
-                fill="#8884d8"
-                name="Deletions"
-              />
+              <Bar dataKey="delete" fill="#8884d8" name="Deletions" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div>
+          <h3 className="text-3xl font-semibold mb-8 text-white text-center">
+            Hourly Action Count
+          </h3>
+          <ResponsiveContainer width="100%" height={500}>
+            <BarChart data={formattedData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="dateTime" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="archive" fill="#82ca9d" name="Archives" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -203,7 +231,7 @@
               <Legend />
               <Line
                 type="monotone"
-                dataKey="total_count"
+                dataKey="page_views"
                 stroke="#8884d8"
                 name="Page Views"
               />
